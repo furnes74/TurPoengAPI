@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace TurPoengAPI.Models
+namespace Db.Models
 {
     public class Post
     {
@@ -32,6 +28,7 @@ namespace TurPoengAPI.Models
 
         public int DefaultPoints { get; set; }
 
+        public Pictures[] Pictures { get; set; }
 
     }
 }

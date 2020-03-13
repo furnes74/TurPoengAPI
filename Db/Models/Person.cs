@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace TurPoengAPI.Models
+namespace Db.Models
 {
     public class Person
     {
@@ -38,7 +35,8 @@ namespace TurPoengAPI.Models
         [MaxLength(30)]
         public string Password { get; set; }
        
-        public int IdrettslagId { get; set; }
-        public Idrettslag Idrettslag { get; set; }
+        public IdrettslagMember[] Idrettslag { get; set; }
+
+        public Pictures[] Pictures { get; set; }
     }
 }

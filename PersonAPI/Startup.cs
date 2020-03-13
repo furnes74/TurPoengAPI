@@ -1,17 +1,13 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
-using TurPoengAPI.Models;
+using Db.Context;
+using Db.Repository;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 
 namespace TurPoengAPI
 {
@@ -27,22 +23,36 @@ namespace TurPoengAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-          /*  services.AddDbContext<PersonContext>(opt =>
-            opt.UseInMemoryDatabase("PersonList"));
-            
-            services.AddDbContext<IdrettslagContext>(opt =>
-            opt.UseInMemoryDatabase("PersonList"));
+            services.AddDbContext<TurPoengContext>(options =>
+            {
+                options.UseSqlServer(Configuration.GetConnectionString("TurPoengContext"));
+            });
 
-            services.AddDbContext<PosterContext>(opt =>
-        opt.UseInMemoryDatabase("PersonList"));
-        s
-            */
+
+            /*  services.AddDbContext<PersonContext>(opt =>
+              opt.UseInMemoryDatabase("PersonList"));
+
+              services.AddDbContext<IdrettslagContext>(opt =>
+              opt.UseInMemoryDatabase("PersonList"));
+
+              services.AddDbContext<PosterContext>(opt =>
+          opt.UseInMemoryDatabase("PersonList"));
+          s
+              */
             /* Turer to be appended*/
             /*
             services.AddDbContext<TurerContext>(opt =>
         opt.UseInMemoryDatabase("PersonList"));
         */
-            services.AddControllers();
+            services.AddTransient<IPersonRepository, PersonRepository>();
+            services.AddTransient<IIdrettslagRepository, IdrettslagRepository>();
+
+            services.AddControllers()
+                .AddNewtonsoftJson(options =>
+                {
+                    options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+                    options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+                });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

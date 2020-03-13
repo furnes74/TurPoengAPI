@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace TurPoengAPI.Models
+namespace Db.Models
 {
     public class Pictures
     {
@@ -18,15 +15,13 @@ namespace TurPoengAPI.Models
 
         public byte[] Picture { get; set; }
 
-        public bool BlnPrivatePicture { get; set; }
+        public bool PrivatePicture { get; set; }
 
         public DateTime Created { get; set; }
         
-        [Key, ForeignKey("Person")]
         public int PersonId { get; set; }
         public Person Person { get; set; }
 
-        [Key, ForeignKey("Post")]
         public int PostId { get; set; }
         public Post Poster { get; set; }
 
